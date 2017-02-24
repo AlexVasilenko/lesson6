@@ -1,32 +1,36 @@
 <h1>Example App</h1>
-
-<ul>
-    {{#each tours}}
-    {{! I'm in a new block...and the context has changed }}
-        <li>
-            {{name}} - {{price}}
-            {{#if ../currencies}}
-                ({{../../currency.abbrev}})
-            {{/if}}
-        </li>
-    {{/each}}
-</ul>
-
-{{#unless currencies}}
-    <p>All prices in {{currency.name}}.</p>
-{{/unless}}
-
-{{#if specialsUrl}}
-{{! I'm in a new block...but the context hasn't changed (sortof) }}
-    <p>Check out our <a href="{{specialsUrl}}">specials!</p>
-{{else}}
-    <p>Please check back often for specials.</p>
-{{/if}}
-
-<p>
-    {{#each currencies}}
-        <a href="#" class="currency">{{.}}</a>
-    {{else}}
-        Unfortunately, we currently only accept {{currency.name}}.
-    {{/each}}
-</p>
+<form method="POST" action="/order">
+  <input name='firstname' type='text' value={{data.firstname}}>
+  {{#if required.firstname}}
+    <div>Required</div>
+  {{/if}}
+  <input name='surrname' type='text' value={{data.surrname}}>
+  {{#if required.surrname}}
+    <div>Required</div>
+  {{/if}}
+  <input name='phone' type='tel' value={{data.phone}}>
+  {{#if required.phone}}
+    <div>Required</div>
+  {{/if}}
+  {{#if isTel}}
+    <div>Not a number.</div>
+  {{/if}}
+  <input name='email' type='email' value={{data.email}}>
+  {{#if required.email}}
+    <div>Required</div>
+  {{/if}}
+  {{#if isEmail}}
+    <div>Email is incorrect</div>
+  {{/if}}
+  <select name='food'>
+    <option value='milk'>Milk</option>
+    <option value='bread'>Bread</option>
+    <option value='potatos'>Potatos</option>
+    <option value='chicken'>Chicken</option>
+    <option value='salt'>Salt</option>
+  </select>
+  {{#if required.food}}
+    <div>Required</div>
+  {{/if}}
+  <input type="submit" text="send">
+</form>
